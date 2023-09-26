@@ -1,0 +1,46 @@
+
+version: '3.3'
+services:
+  webscrape_db:
+    container_name: "webscraper_db"
+    image: postgres:14-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: webscraper
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB_PORT: 5432
+    volumes:
+      - .:/code
+      - db:/var/lib/postgresql/data
+    stdin_open: true
+    ports:
+      - "8012:5432"
+
+  webscrape:
+    build:
+      context: ./
+      dockerfile: ./Dockerfile
+    image: webscraper
+    environment:
+      - IS_LOCAL=True
+      - db_name=movies_db
+      - user=postgres
+      - password=postgres
+      - port=5432
+      - host=webscrape_db
+    container_name: webscraper_app
+    expose:
+    - "8010"
+    ports:
+    - "8010:8000"
+    volumes:
+      - .:/workspace/site
+    command: sh -c "python manage.py runserver 0:8000"
+    stdin_open: true
+    tty: true
+    depends_on:
+      - webscrape_db
+
+volumes:
+  db:
