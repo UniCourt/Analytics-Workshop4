@@ -44,7 +44,7 @@ Step 3 : Create a python file web_scrapper.py in webscraper project,which will i
 
 Step 4 : Create file i,e imdb_extractor.py , which will include the script to scrap the website. Write the below script inside that file
 
-     vi imdb_extractor.py
+    vi imdb_extractor.py
 
 step 5 : Copy the below code to the imdb_extractor.py file.
   
@@ -133,7 +133,7 @@ Code to copy into DockerFile
     COPY . /workspace/site
 
 
-Step 7 . Create a docker-compose.yml file , which will have 2 container one for webapp and other one for postgres db
+Step 7 . Create a docker-compose.yml file , which will have 2 container one for webapp and other one for Postgres DB
 
 Command to create docker compose file : 
       
@@ -210,4 +210,4 @@ Step 11: Run the below command to run the python script.
 
 Now you should be able to see the extracted data printed on your screen.
 
-
+[`Next`](webscrape_store_data.md)

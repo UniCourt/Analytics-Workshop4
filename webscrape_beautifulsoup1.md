@@ -1,9 +1,9 @@
-## Beautiful Soup - Kinds of objects
+## Beautiful Soup - Kinds of Objects
 
 
 When we passed a html document or string to a beautifulsoup constructor, beautifulsoup basically converts a complex html page into different python objects.
 
-### some of important objects:
+### Some of the Important Objects:
 
 * BeautifulSoup
 * Tag
@@ -90,4 +90,4 @@ You can replace the string with another string but you cant edit the existing st
     <html><body><h2 id="message">Online Learning!</h2></body></html>
 
 
-[`next`](webscrape_beautifulsoup2.md)
+[`Next`](webscrape_beautifulsoup2.md)

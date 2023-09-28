@@ -38,4 +38,4 @@ These are just a few of the common HTTP status codes you might encounter while s
 
 
 
-[`next`](webscrape_intro_beautifulsoup.md)
+[`Next`](webscrape_intro_beautifulsoup.md)

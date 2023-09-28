@@ -87,4 +87,4 @@ Beautiful Soup provides several methods for parsing and navigating HTML or XML d
        Output: 'https://example.com'
 
 
-[`next`](webscrape_intro_steps.md)
+[`Next`](webscrape_intro_steps.md)
