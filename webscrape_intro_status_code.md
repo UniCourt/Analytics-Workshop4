@@ -1,4 +1,4 @@
-## Status code:
+## Status Codes:
 
 When you perform web scraping or make HTTP requests to websites, the server responds with an HTTP status code, which indicates the outcome of the request. These status codes provide information about whether the request was successful, encountered an error, or requires further action. 
 
