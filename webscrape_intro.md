@@ -1,4 +1,4 @@
-# Web Scrapping Using Python
+# Web Scraping Using Python
 
 ## Introduction
 
