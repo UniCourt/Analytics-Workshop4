@@ -66,7 +66,7 @@ Step 4. In order to view the data in the admin, let us run the server. For that 
 
 Step 5. Now open the webpage and check if you can view the data
 
-    http://0.0.0.0:8000/admin/
+    http://0.0.0.0:8010/admin/
 
 Step 6. To login into django-admin create a superuser using below steps :   
     
