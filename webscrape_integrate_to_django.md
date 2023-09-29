@@ -66,7 +66,7 @@ step 4. In order to view the data in the admin, let us run the server. For that 
 
 step 5. Now open the webpage and check if you can view the data
 
-        http://0.0.0.0:8000/admin/
+        http://0.0.0.0:8010/admin/
 
 step 6. To login into django-admin create a superuser using below steps :   
     
@@ -179,18 +179,17 @@ step 7. Open the apps.py file present in the same path where admin.py and models
             #  creating soup using beautifulsoup to extract data
             soup = BeautifulSoup(top250_movies_data.text, 'html.parser')
         
-            #  get all movies div. type of "movies" will be <class 'bs4.element.ResultSet'>
-            movies_div = soup.findAll('div',
-                                      class_='ipc-title ipc-title--base ipc-title--title ipc-title-link-no-icon ipc-title--on-textPrimary sc-b51a3d33-7 huNpFl cli-title')
+             #  get all movies div. type of "movies" will be <class 'bs4.element.ResultSet'>
+            movie_links = soup.findAll('a', class_="ipc-title-link-wrapper")
         
-            movies_link: list = []
+            movie_link_list: list = []
             #  get all the movie links and store in list
-            for div_tag in movies_div:
-                movies_link.append(div_tag.a['href'])
+            for movie_link in movie_links:
+                if 'href' in movie_link.attrs and re.search(r'title', movie_link['href']):
+                    movie_link_list.append(movie_link['href'])
         
             #  using movies_link list hit the all movies details page and get the required(name and director) from the page
-            for movie in movies_link[:2]:
-        
+            for movie in movie_link_list[:10]:
                 url = f'https://www.imdb.com/{movie}'
                 movie_data = requests.get(url, headers=header_dict)
                 movie_soup = BeautifulSoup(movie_data.text, 'html.parser')
