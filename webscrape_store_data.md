@@ -44,6 +44,7 @@ step 2. Currently we do not have anything in this file. Let us add one model cal
             writers_name = models.CharField(max_length=250)
             description = models.TextField
             tagline = models.CharField(max_length=350)
+            created_date = models.TimeField()
 
 
             def __str__(self):
@@ -57,6 +58,7 @@ Also create 2 more models that are Review model and TopCast model and add it her
 
         class Reviews(models.Model):
             movie_name = models.CharField(max_length=200)
+            subject = models.TextField()
             reviews = models.CharField(max_length=350)
 
             def __str__(self):
@@ -224,17 +226,17 @@ code:
         #  creating soup using beautifulsoup to extract data
         soup = BeautifulSoup(top250_movies_data.text, 'html.parser')
     
-        #  get all movies div. type of "movies" will be <class 'bs4.element.ResultSet'>
-        movies_div = soup.findAll('div',
-                                  class_='ipc-title ipc-title--base ipc-title--title ipc-title-link-no-icon ipc-title--on-textPrimary sc-b51a3d33-7 huNpFl cli-title')
+         #  get all movies div. type of "movies" will be <class 'bs4.element.ResultSet'>
+        movie_links = soup.findAll('a', class_="ipc-title-link-wrapper")
     
-        movies_link: list = []
+        movie_link_list: list = []
         #  get all the movie links and store in list
-        for div_tag in movies_div:
-            movies_link.append(div_tag.a['href'])
-        #  using movies_link list hit the all movies details page and get the required(name and director) from the page
-        for movie in movies_link:
+        for movie_link in movie_links:
+            if 'href' in movie_link.attrs and re.search(r'title', movie_link['href']):
+                movie_link_list.append(movie_link['href'])
     
+        #  using movies_link list hit the all movies details page and get the required(name and director) from the page
+        for movie in movie_link_list[:10]:
             url = f'https://www.imdb.com/{movie}'
             movie_data = requests.get(url, headers=header_dict)
             movie_soup = BeautifulSoup(movie_data.text, 'html.parser')

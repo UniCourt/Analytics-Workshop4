@@ -20,7 +20,7 @@ One Day workshop on web scraping, extractors and debugging a program.
 | 11:15 - 01:00 |  [`Webscrapping using python`](webscrape_execise.md)
 | 01:00 - 02:00 |  break
 | 02:00 - 2:45  |  [`Storing the srapped data in Postgres DB`](webscrape_store_data.md)
-| 02:45 - 3:15  |  [`Integrate the script to Django admin.`](webscrape_ingrate_to_django.md)
+| 02:45 - 3:15  |  [`Integrate the script to Django admin.`](webscrape_integrate_to_django.md)
 | 3:15 -  3:30  |  break
 | 3:30 -  4:30  |  [`Python Debugging`](python_debug.md)
 | 4:30 - 5:00   |  Q & A
