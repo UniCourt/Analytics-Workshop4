@@ -53,7 +53,7 @@ step 5 : Copy the below code to the imdb_extractor.py file.
     
     
     def start_extraction():
-      print("Extraction started")
+        print("Extraction started")
   
         #  url to the top 250 movies page
         url = "https://www.imdb.com/chart/top/?ref_=nv_mv_250"
