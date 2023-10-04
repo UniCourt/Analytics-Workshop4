@@ -1,172 +1,112 @@
+# Integrate the Script with Django Admin.
 
-# Save the Scraped Data in Postgres Database
-
-* Now let us save the data that we have extracted into a Postgres database.
-* Let us create new database i.e `movies_db` in webscraper_db container  
-* Follow the below step to create the database.
-
-Step 1. Open a new tab in your terminal and exec into the webscraper_db container. Since you have run the docker-compose up command before, both webscraper_app and webscraper_db containers should be up. So we need not bring the container up. We can directly run the below command to exec into the container
-
-    docker exec -it webscraper_db sh
+* Let us view the scraped data in the Django-admin. Follow the below steps to achieve that.
 
 
-Please note that webscraper_app and webscraper_db are the container_name that you have mentioned in the docker-compose.yml file. If the names you have specified are different, use that.
+Step 1. Open the admin.py file which is present in the same path as that of models.py. Currently it will include the Student model.
+	
+    vi admin.py
 
-Step 2. Now run the below commands to login to psql.
-        
-    psql -U postgres
+Step 2. Add the below class to admin.py
 
-Step 3. Now create the database by running below command.
-
-    CREATE DATABASE movies_db;
-
-
-Since the database is ready, let us create the required tables and columns to that database using the Django models. Keep the database container running in this tab and you may continue the development in a new tab.
-
-
-Follow the below steps:
-
-Step 1. Open the models.py file which is present in the members folder.
-
-File path : webscraper/scraper/models.py
-
-Command :
-
-    vi models.py 
-
-Step 2. Currently we do not have anything in this file. Let us add one model called Movie into the file. For that copy the below code to that file
-
-    from django.db import models
-    # Create your models here.
-    class Movies(models.Model):
-        movie_name = models.CharField(max_length=200)
-        director_name = models.CharField(max_length=200)
-        writers_name = models.CharField(max_length=250)
-        description = models.TextField
-        tagline = models.CharField(max_length=350)
-        created_date = models.TimeField()
-
-        def __str__(self):
-            return self.movie_name
-
+    from django.contrib import admin
+    from .models import Movies,Reviews,TopCast
     
-    class Meta:
-        unique_together = (('movie_name'),)
-
-Also create 2 more models that are Review model and TopCast model and add it here. Copy the code below to the same file.
-
-    class Reviews(models.Model):
-        movie_name = models.CharField(max_length=200)
-        subject = models.TextField()
-        reviews = models.CharField(max_length=350)
-
-        def __str__(self):
-            return self.movie_name
-
-
-    class TopCast(models.Model):
-        movie_name = models.CharField(max_length=200)
-        actor_name = models.CharField(max_length=200)
-        character_name = models.CharField(max_length=200)
-
-        def __str__(self):
-            return self.movie_name
-
-Each class represents a model which will in turn represent a table in the database and each property of that class refers to each column in that table.
-
-
-Step 3.  Let us alter  database  settings in settings.py
-
-Path : webscraper/webscraper/settings.py
-
-Code : 
-
-Remove the existing Database settings i,e 
-            
-    DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': BASE_DIR / 'db.sqlite3',
-            }
-        }
-
-and add the below code 
-
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'movies_db',  # Or path to database file1 if using sqlite3.
-            'USER': 'postgres',  # Not used with sqlite3.
-            'PASSWORD': 'postgres',  # Not used with sqlite3.
-            'HOST': 'webscrape_db',  # Set to empty string for localhost.
-            # Not used with sqlite3.
-            'PORT': '5432',
-            # Set to empty string for default. Not used with sqlite3.
-        }
-    }
-
-And also add 'scraper.apps.ScraperConfig' to INSTALLED_APPS list in settings.py
-
-code will look like,
-
-    INSTALLED_APPS = [
-        'django.contrib.admin',
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'django.contrib.sessions',
-        'django.contrib.messages',
-        'django.contrib.staticfiles',
-        'scraper.apps.ScraperConfig'
-    ]
-
-
-And add the below in the same file 
-
-    ALLOWED_HOSTS = ['*', ]
-
-
-Step 4. Let us run makemigrations to create the database table using the models. For that first open the tab where webscraper_app is running. If it is not running anywhere, open a new tab and run the below command to run the container
-
-    docker exec -it webscraper_app sh
-
-Once you get inside webscraper_app, run the below commands
-
-    python manage.py makemigrations
- 	python manage.py migrate
-
-
-Step 5. Now go to the webscraper_db (database container) and run below commands to ensure that the new table members_blog is created.
-
-    postgres=# \c movies_db
- 	You are now connected to the database "movies_db" as user "postgres".
- 	member_db=# \dt
-
-* The above command should list down all the tables in the movies_db and there should be scraper_movies,scraper_reviews and scraper_topcast present.
     
-        \d scraper_movies
-  
-This command should describe the scarper_movies table and show all the columns present.
+    # Register your models here.
+    class MovieAdmin(admin.ModelAdmin):
+        list_display = ("movie_name", "director_name", "writers_name", "description", "tagline",'created_date')
+        list_filter = ("movie_name",)
+    
+    
+    class TopCastAdmin(admin.ModelAdmin):
+        list_display = ('movie_name', 'actor_name', 'character_name')
+        list_filter = ("movie_name",)
+    
+    
+    class ReviewAdmin(admin.ModelAdmin):
+        list_display = ('movie_name', 'subject', 'reviews')
+    
+Step 3. Register all models in the admin.py 
+   
+    admin.site.register(Movies, MovieAdmin)
+    admin.site.register(TopCast, TopCastAdmin)
+    admin.site.register(Reviews, ReviewAdmin)
 
 
-Step 5. Now let us modify our script so that it will start saving the extracted data into the created table.
+After modifying the admin.py file will look like this
 
-Open the imdb_extractor.py file present in the webscraper folder and replace the script with the one given below.
+    from django.contrib import admin
+    from .models import Movies,Reviews,TopCast
+    
+    
+    # Register your models here.
+    class MovieAdmin(admin.ModelAdmin):
+        list_display = ("movie_name", "director_name", "writers_name", "description", "tagline",'created_date')
+        list_filter = ("movie_name",)
+    
+    
+    class TopCastAdmin(admin.ModelAdmin):
+        list_display = ('movie_name', 'actor_name', 'character_name')
+        list_filter = ("movie_name",)
+    
+    
+    class ReviewAdmin(admin.ModelAdmin):
+        list_display = ('movie_name', 'subject', 'reviews')
+    
+    
+    admin.site.register(Movies, MovieAdmin)
+    admin.site.register(TopCast, TopCastAdmin)
+    admin.site.register(Reviews, ReviewAdmin)
 
-Code:
 
+Step 4. In order to view the data in the admin, let us run the server. For that go to the tab where webscraper_app is running and run the below command
+
+    python manage.py runserver 0:8010
+
+Step 5. Now open the webpage and check if you can view the data
+
+    http://0.0.0.0:8010/admin/
+
+Step 6. To login into django-admin create a superuser using below steps :   
+    
+In the webapp container run the command :
+
+    python manage.py createsuperuser --username admin    
+
+give below inputs on successfully run of above command.
+Email address (press enter)
+Password : admin123
+Password(again) : admin123
+
+
+Now add the credentials in the django-admin page and refresh.
+
+Now you will be able to see all the scraped data from the Postgres DB
+
+Step 7. Open the apps.py file present in the same path where admin.py and models.py is present. And copy below code (same imdb_extractor.py script) Do not delete the existing contents and this is how it will look,
+
+    from django.apps import AppConfig
+    
+    
+    class ScraperConfig(AppConfig):
+        default_auto_field = 'django.db.models.BigAutoField'
+        name = 'scraper'
+    
+    
     import re
     
     import psycopg2
     import requests
     from bs4 import BeautifulSoup, element
-
+    
     # For the credentials mentioned below, you may refer the docker-compose.yml present in myworld .
     db_name = 'movies_db'
     db_user = 'postgres'
     db_pass = 'postgres'
     db_host = 'webscrape_db'
     db_port = '5432'
-
+    
     # This will create the connection the to Postgres database.
     conn = psycopg2.connect(dbname=db_name, user=db_user, password=db_pass, host=db_host, port=db_port)
     
@@ -239,17 +179,18 @@ Code:
         #  creating soup using beautifulsoup to extract data
         soup = BeautifulSoup(top250_movies_data.text, 'html.parser')
     
-         #  get all movies div. type of "movies" will be <class 'bs4.element.ResultSet'>
-        movie_links = soup.findAll('a', class_="ipc-title-link-wrapper")
+        #  get all movies div. type of "movies" will be <class 'bs4.element.ResultSet'>
+        movies_div = soup.findAll('div',
+                                    class_='ipc-title ipc-title--base ipc-title--title ipc-title-link-no-icon ipc-title--on-textPrimary sc-b51a3d33-7 huNpFl cli-title')
     
-        movie_link_list: list = []
+        movies_link: list = []
         #  get all the movie links and store in list
-        for movie_link in movie_links:
-            if 'href' in movie_link.attrs and re.search(r'title', movie_link['href']):
-                movie_link_list.append(movie_link['href'])
+        for div_tag in movies_div:
+            movies_link.append(div_tag.a['href'])
     
         #  using movies_link list hit the all movies details page and get the required(name and director) from the page
-        for movie in movie_link_list[:10]:
+        for movie in movies_link[:2]:
+    
             url = f'https://www.imdb.com/{movie}'
             movie_data = requests.get(url, headers=header_dict)
             movie_soup = BeautifulSoup(movie_data.text, 'html.parser')
@@ -257,7 +198,7 @@ Code:
             #  extracting the data using soup
             movie_name = movie_soup.find('h1').text
             data_list = movie_soup.findAll('a',
-                                           class_='ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link')
+                                            class_='ipc-metadata-list-item__list-content-item ipc-metadata-list-item__list-content-item--link')
             director_name_list = []
             writers_name_list = []
             for data in data_list:
@@ -265,8 +206,6 @@ Code:
                     director_name_list.append(data.text)
                 elif re.search(r'_wr$', data['href']) and data.text not in writers_name_list:
                     writers_name_list.append(data.text)
-    
-    
     
             director_name = ','.join(director_name_list)
             writers_name = ','.join(writers_name_list)
@@ -340,14 +279,68 @@ Code:
         start_extraction()
 
 
-Step 6. Now go to webscraper_app container and run the script
-	
-    python3 imdb_extractor.py
+Step 8. Now let us modify the views.py file to include the view to scrap the data. Open the views.py file present inside the same folder as that of models.py and add the below function at the bottom of the file (Do not delete the existing contents)
 
-Once the script run completes, go to the database container and run the below sql query to check if the data is populated or not.
-		
-    select * from scraper_movies;
-    select * from scraper_reviews;
-    select * from scraper_topcast;
+    from django.http import JsonResponse
+    from . import apps
+    
+    # Create your views here.
+    def python_movie_scrap(request):
+    
+    apps.start_extraction()
+    return JsonResponse({'status': 'success', "message" : "Extracted and populated the table."}, status=200)
 
-[Next](webscrape_integrate_to_django.md)
+
+Step 9.  Add below code in webscraper/urls.py , which will register path 
+
+    path('scraper/', include('scraper.urls')),
+
+webscraper/urls.py  file will look like,
+
+    from django.contrib import admin
+    from django.urls import path,include
+    
+    urlpatterns = [
+        path('scraper/', include('scraper.urls')),
+        path('admin/', admin.site.urls),
+    ]
+
+
+Step 10. And also add a url path to scraper/urls.py file
+    
+    path('start_python_movie_scraping', views.python_movie_scrap)
+
+scraper/urls.py file will look like,
+
+    from django.urls import path
+    from . import views
+    
+    urlpatterns = [
+
+    path('start_python_movie_scraping', views.python_movie_scrap)
+         ]
+
+
+Step 11. Now let us run this view. Make sure your server is running in webscraper_app. If not, run the server
+
+    python manage.py runserver 0:8010
+
+Now copy the below url in webpage.
+
+    http://0.0.0.0:8010/scraper/start_python_movie_scraping
+
+
+If your script ran fine, you should get a message in the browser
+
+    {
+        "status": "sucess",
+        "message": "Extracted and populated the table."
+    }
+
+To verify if the extractions had happened fine, you may open the admin page and check the data.
+
+    http://0.0.0.0:8010/admin/
+
+Check for the created_date of the entries in the table. If the script ran fine, the entries will have the latest date as created_Date
+
+[Next](python_debug.md)

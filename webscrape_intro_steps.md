@@ -1,4 +1,4 @@
-## Steps to scrape the website 
+## Steps to Scrape a Website 
 
 1. Choose a website :  
     Select the website you want to scrape. Make sure you are aware of and respect the website's terms of service and robots.txt file, which may specify rules for web scraping.
@@ -41,3 +41,4 @@
 
 Web scraping can be a powerful tool when used responsibly. It's essential to stay up-to-date with the latest best practices and legal considerations in web scraping to ensure you're scraping data ethically and efficiently.
  
+[`Next`](webscrape_execise.md)

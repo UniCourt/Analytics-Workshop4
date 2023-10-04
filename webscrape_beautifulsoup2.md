@@ -78,9 +78,9 @@ We create a BeautifulSoup object and specify the parser ('html.parser').
 
 We navigate to the title tag using soup.title and print its text.
 
-We find the <div> element with id="content" using soup.find(). Then, within this div, we navigate to the h1 tag and print its text.
+We find the `<div>` element with id="content" using soup.find(). Then, within this div, we navigate to the h1 tag and print its text.
 
-We find the <ul> tag within the content_div and iterate through its <li> elements to print each list item's text.
+We find the `<ul>` tag within the content_div and iterate through its `<li>` elements to print each list item's text.
 
 
-[`next`](webscrape_beautifulsoup3.md)
+[`Next`](webscrape_beautifulsoup3.md)

@@ -44,16 +44,16 @@ Step 3 : Create a python file web_scrapper.py in webscraper project,which will i
 
 Step 4 : Create file i,e imdb_extractor.py , which will include the script to scrap the website. Write the below script inside that file
 
-     vi imdb_extractor.py
+    vi imdb_extractor.py
 
 step 5 : Copy the below code to the imdb_extractor.py file.
   
-    import requests
+    import requests,re
     from bs4 import BeautifulSoup, element
     
     
     def start_extraction():
-      print("Extraction started")
+        print("Extraction started")
   
         #  url to the top 250 movies page
         url = "https://www.imdb.com/chart/top/?ref_=nv_mv_250"
@@ -81,17 +81,17 @@ step 5 : Copy the below code to the imdb_extractor.py file.
         #  creating soup using beautifulsoup to extract data
         soup = BeautifulSoup(top250_movies_data.text, 'html.parser')
     
-        #  get all movies div. type of "movies" will be <class 'bs4.element.ResultSet'>
-        movies_div = soup.findAll('div',
-                                  class_='ipc-title ipc-title--base ipc-title--title ipc-title-link-no-icon ipc-title--on-textPrimary sc-b51a3d33-7 huNpFl cli-title')
+         #  get all movies div. type of "movies" will be <class 'bs4.element.ResultSet'>
+        movie_links = soup.findAll('a', class_="ipc-title-link-wrapper")
     
-        movies_link: list = []
+        movie_link_list: list = []
         #  get all the movie links and store in list
-        for div_tag in movies_div:
-            movies_link.append(div_tag.a['href'])
+        for movie_link in movie_links:
+            if 'href' in movie_link.attrs and re.search(r'title', movie_link['href']):
+                movie_link_list.append(movie_link['href'])
     
         #  using movies_link list hit the all movies details page and get the required(name and director) from the page
-        for movie in movies_link[:10]:
+        for movie in movie_link_list[:10]:
             url = f'https://www.imdb.com/{movie}'
             movie_data = requests.get(url, headers=header_dict)
             movie_soup = BeautifulSoup(movie_data.text, 'html.parser')
@@ -133,7 +133,7 @@ Code to copy into DockerFile
     COPY . /workspace/site
 
 
-Step 7 . Create a docker-compose.yml file , which will have 2 container one for webapp and other one for postgres db
+Step 7 . Create a docker-compose.yml file , which will have 2 container one for webapp and other one for Postgres DB
 
 Command to create docker compose file : 
       
@@ -179,7 +179,7 @@ Paste the below code in the file :
         - "8010:8000"
         volumes:
           - .:/workspace/site
-        command: sh -c "python manage.py runserver 0:8010"
+        command: sh -c "python manage.py runserver 0:8000"
         stdin_open: true
         tty: true
         depends_on:
@@ -210,4 +210,4 @@ Step 11: Run the below command to run the python script.
 
 Now you should be able to see the extracted data printed on your screen.
 
-
+[`Next`](webscrape_store_data.md)
