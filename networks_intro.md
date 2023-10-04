@@ -1,4 +1,4 @@
-# Communication on the network 
+# Communication on the Network 
 
 Communication on a network refers to the exchange of data and information between devices or nodes that are connected to the same network. Networks can be of various types, including local area networks (LANs), wide area networks (WANs), the internet, and more. Effective communication on a network is essential for sharing resources, accessing data, and enabling various applications and services. 
 
@@ -30,10 +30,10 @@ Here are some key aspects of communication on a network:
 Effective communication on a network is vital for businesses, organizations, and individuals to access information, share resources, and collaborate in a digital age. It's essential to understand the underlying technologies and protocols that enable network communication to ensure its reliability and security.
 
 
-##  How do systems communicate on a network ?
+##  How do Systems Communicate on a Network ?
 ![comm.jpg](images%2Fcomm.jpg)
 
-### web server and client
+### Web Server and Client
 
 A web server and a web client are two fundamental components of the World Wide Web and the HTTP (Hypertext Transfer Protocol) communication system. They work together to enable the retrieval and display of web content, such as web pages, images, videos, and other resources. 
 
@@ -41,7 +41,7 @@ Here's an overview of each:
 
 ![web_server_client.png](images%2Fweb_server_client.png)
 
-#### 1.Web Server:
+#### 1. Web Server:
 
 A web server is a computer program or software application that serves as a centralized hub for storing, processing, and delivering web content to clients over the internet.
 Its primary functions include:
@@ -56,7 +56,7 @@ Common web server software includes Apache, Nginx, Microsoft Internet Informatio
 
 
 
-#### 2.Web Client:
+#### 2. Web Client:
 
 A web client is a software application or user agent that initiates requests to web servers and displays the web content to users. The most common web client is a web browser (e.g., Chrome, Firefox, Safari, Edge), but other applications can also act as web clients (e.g., mobile apps, command-line tools).
 The web client's primary functions include:
@@ -75,7 +75,7 @@ The interaction between a web server and a web client follows a request-response
 This client-server architecture is fundamental to the functioning of the World Wide Web and underpins most internet-based applications and services.
 
 
-##  How do Servers and clients communicate? 
+##  How do Servers and Clients Communicate? 
 
 A web client is an application that communicates with a web server, using Hypertext Transfer Protocol (HTTP)
 Web servers speak the HTTP protocol, so they are often called HTTP servers. These HTTP servers store the Internet’s data and provide the data when it is requested by HTTP clients.
@@ -131,7 +131,7 @@ An HTTP response is sent by a web server in response to an HTTP request. It cont
 ![http_resp.png](images%2Fhttp_resp.png)
 
 
-## Http Handshaking
+## HTTP Handshaking
 
 HTTP (Hypertext Transfer Protocol) handshaking refers to the process by which a client (usually a web browser) and a web server establish a connection and negotiate the parameters for exchanging data. This handshake is crucial for initiating communication between the client and server and ensuring that both parties understand how to exchange information effectively. Here's a simplified overview of the HTTP handshaking process:
 
@@ -154,7 +154,7 @@ Additionally, the HTTP/1.1 and HTTP/2 protocols have introduced optimizations to
 Overall, HTTP handshaking is a fundamental process in web communication, allowing clients and servers to exchange data and fulfill requests efficiently and securely.
 
 
-## OSI(Open Systems Interconnection)  Model
+## OSI (Open Systems Interconnection) Model
 
 The OSI model,  is a reference framework that explains the process of transmitting data between computers. It is divided into seven layers that work together to carry out specialised network functions, allowing for a more systematic approach to networking.
 
@@ -216,4 +216,4 @@ HTTP is a request-response protocol, which means that a client application sends
 HTTP is a foundational protocol of the World Wide Web and is used by billions of people around the world every day to access and publish information.
 
 
-[`next`](html_intro.md)
+[`Next`](html_intro.md)

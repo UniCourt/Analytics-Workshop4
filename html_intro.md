@@ -3,7 +3,7 @@
 
 HTML (Hypertext Markup Language) is a standard markup language used for creating web pages. It is the backbone of every web page and is used to structure content, define the layout, and specify how web browsers should display the information. HTML consists of a series of elements, each enclosed in angle brackets `< >`, which are used to define different parts of a web page.
 
- #### why is it called a markup language?
+ #### Why is it called a Markup Language?
 
 HTML (Hypertext Markup Language) is called a "markup language" because it is a language that uses special tags to markup, or annotations, to describe the structure and formatting of text and multimedia documents
 
@@ -131,7 +131,7 @@ In this example:
 This tree structure allows you to programmatically access and manipulate the content and structure of the HTML document using JavaScript or other DOM-manipulation technologies.
 
 
-pictorial representation of DOM structure
+Pictorial representation of DOM structure
 ![img.png](images%2Fimg.png)
 
 
@@ -153,3 +153,4 @@ In addition to these benefits, the DOM is also important because it is a standar
 
 Overall, the DOM is an essential tool for web developers who want to create dynamic and interactive web applications.
 
+[`Next`](webscrape_intro.md)

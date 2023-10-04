@@ -1,22 +1,22 @@
 
-# Save the scraped data to Postgres Database
+# Save the Scraped Data in Postgres Database
 
-* Now let us save the data that we have extracted into a postgres database.
-* Let us create new database i,e movies_db in webscraper_db container  
+* Now let us save the data that we have extracted into a Postgres database.
+* Let us create new database i.e `movies_db` in webscraper_db container  
 * Follow the below step to create the database.
 
-step 1. Open a new tab in your terminal and exec into the webscraper_db container. Since you have run the docker-compose up command before, both webscraper_app and webscraper_db containers should be up. So we need not bring the container up. We can directly run the below command to exec into the container
+Step 1. Open a new tab in your terminal and exec into the webscraper_db container. Since you have run the docker-compose up command before, both webscraper_app and webscraper_db containers should be up. So we need not bring the container up. We can directly run the below command to exec into the container
 
     docker exec -it webscraper_db sh
 
 
 Please note that webscraper_app and webscraper_db are the container_name that you have mentioned in the docker-compose.yml file. If the names you have specified are different, use that.
 
-step 2. Now run the below commands to login to psql.
+Step 2. Now run the below commands to login to psql.
         
     psql -U postgres
 
-step 3. Now create the database by running below command.
+Step 3. Now create the database by running below command.
 
     CREATE DATABASE movies_db;
 
@@ -26,55 +26,56 @@ Since the database is ready, let us create the required tables and columns to th
 
 Follow the below steps:
 
-step 1. Open the models.py file which is present in the members folder.
+Step 1. Open the models.py file which is present in the members folder.
 
 File path : webscraper/scraper/models.py
 
 Command :
 
-        vi models.py 
+    vi models.py 
 
-step 2. Currently we do not have anything in this file. Let us add one model called Movie into the file. For that copy the below code to that file
+Step 2. Currently we do not have anything in this file. Let us add one model called Movie into the file. For that copy the below code to that file
 
-        from django.db import models
-        # Create your models here.
-        class Movies(models.Model):
-            movie_name = models.CharField(max_length=200)
-            director_name = models.CharField(max_length=200)
-            writers_name = models.CharField(max_length=250)
-            description = models.TextField()
-            tagline = models.CharField(max_length=350)
-            created_date = models.TimeField()
+    from django.db import models
+    # Create your models here.
+    class Movies(models.Model):
+        movie_name = models.CharField(max_length=200)
+        director_name = models.CharField(max_length=200)
+        writers_name = models.CharField(max_length=250)
+        description = models.TextField
+        tagline = models.CharField(max_length=350)
+        created_date = models.TimeField()
+
+        def __str__(self):
+            return self.movie_name
+
+    
+    class Meta:
+        unique_together = (('movie_name'),)
+
+Also create 2 more models that are Review model and TopCast model and add it here. Copy the code below to the same file.
+
+    class Reviews(models.Model):
+        movie_name = models.CharField(max_length=200)
+        subject = models.TextField()
+        reviews = models.CharField(max_length=350)
+
+        def __str__(self):
+            return self.movie_name
 
 
-            def __str__(self):
-                return self.movie_name
+    class TopCast(models.Model):
+        movie_name = models.CharField(max_length=200)
+        actor_name = models.CharField(max_length=200)
+        character_name = models.CharField(max_length=200)
 
-
-            class Meta:
-                unique_together = (('movie_name'),)
-
-        class Reviews(models.Model):
-            movie_name = models.CharField(max_length=200)
-            subject = models.TextField()
-            reviews = models.CharField(max_length=350)
-
-            def __str__(self):
-                return self.movie_name
-
-
-        class TopCast(models.Model):
-            movie_name = models.CharField(max_length=200)
-            actor_name = models.CharField(max_length=200)
-            character_name = models.CharField(max_length=200)
-
-            def __str__(self):
-                return self.movie_name
+        def __str__(self):
+            return self.movie_name
 
 Each class represents a model which will in turn represent a table in the database and each property of that class refers to each column in that table.
 
 
-step 3.  Let us alter  database  settings in settings.py
+Step 3.  Let us alter  database  settings in settings.py
 
 Path : webscraper/webscraper/settings.py
 
@@ -124,7 +125,7 @@ And add the below in the same file
     ALLOWED_HOSTS = ['*', ]
 
 
-step 4. Let us run makemigrations to create the database table using the models. For that first open the tab where webscraper_app is running. If it is not running anywhere, open a new tab and run the below command to run the container
+Step 4. Let us run makemigrations to create the database table using the models. For that first open the tab where webscraper_app is running. If it is not running anywhere, open a new tab and run the below command to run the container
 
     docker exec -it webscraper_app sh
 
@@ -134,7 +135,7 @@ Once you get inside webscraper_app, run the below commands
  	python manage.py migrate
 
 
-step 5. Now go to the webscraper_db (database container) and run below commands to ensure that the new table members_blog is created.
+Step 5. Now go to the webscraper_db (database container) and run below commands to ensure that the new table members_blog is created.
 
     postgres=# \c movies_db
  	You are now connected to the database "movies_db" as user "postgres".
@@ -147,11 +148,11 @@ step 5. Now go to the webscraper_db (database container) and run below commands 
 This command should describe the scarper_movies table and show all the columns present.
 
 
-step 5. Now let us modify our script so that it will start saving the extracted data into the created table.
+Step 5. Now let us modify our script so that it will start saving the extracted data into the created table.
 
 Open the imdb_extractor.py file present in the webscraper folder and replace the script with the one given below.
 
-code:
+Code:
 
     import re
     
@@ -166,7 +167,7 @@ code:
     db_host = 'webscrape_db'
     db_port = '5432'
 
-    # This will create the connection the to postgres database.
+    # This will create the connection the to Postgres database.
     conn = psycopg2.connect(dbname=db_name, user=db_user, password=db_pass, host=db_host, port=db_port)
     
     
@@ -339,7 +340,7 @@ code:
         start_extraction()
 
 
-step 6. Now go to webscraper_app container and run the script
+Step 6. Now go to webscraper_app container and run the script
 	
     python3 imdb_extractor.py
 
@@ -349,3 +350,4 @@ Once the script run completes, go to the database container and run the below sq
     select * from scraper_reviews;
     select * from scraper_topcast;
 
+[Next](webscrape_integrate_to_django.md)

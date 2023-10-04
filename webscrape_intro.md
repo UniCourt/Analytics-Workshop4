@@ -1,4 +1,4 @@
-# Web Scrapping Using Python
+# Web Scraping Using Python
 
 ## Introduction
 
@@ -8,7 +8,7 @@ Web scraping is the process of extracting data from websites and store it in dat
 ![webscrape.png](images%2Fwebscrape.png)
 
 
-### Importance of Web scraping
+### Importance of Web Scraping
 
 * Market research: Web scraping can be used to collect data on competitors, product trends, and customer sentiment. This data can be used to make informed business decisions about pricing, marketing, and product development.
 * Lead generation: Web scraping can be used to collect contact information from potential customers. This information can be used to create targeted sales and marketing campaigns.
@@ -19,7 +19,7 @@ Web scraping is the process of extracting data from websites and store it in dat
 
 Example:
 
-website : https://www.worldometers.info/coronavirus/
+Website : https://www.worldometers.info/coronavirus/
 
 
 ![covid_stats.png](images%2Fcovid_stats.png)
@@ -209,4 +209,4 @@ Once installed, you can easily incorporate it into your Python projects to inter
 
 
 
-[`next`](webscrape_intro_status_code.md)
+[`Next`](webscrape_intro_status_code.md)

@@ -70,15 +70,15 @@ You can search for tags using various methods like find(), find_all(), and CSS s
 Modifying the Document:
 You can also modify the document by adding, removing, or modifying tags and their attributes.
 
-        # Create a new <div> tag
-        new_div = soup.new_tag('div')
-        new_div.string = 'This is a new <div> tag.'
-        
-        # Append the new <div> tag to the document
-        soup.body.append(new_div)
-        
-        # Print the modified document
-        print(soup.prettify())
+    # Create a new <div> tag
+    new_div = soup.new_tag('div')
+    new_div.string = 'This is a new <div> tag.'
+
+    # Append the new <div> tag to the document
+    soup.body.append(new_div)
+
+    # Print the modified document
+    print(soup.prettify())
 
 
 Writing to a File:
@@ -90,4 +90,4 @@ You can save the modified document to a file using the prettify() method and sta
 Beautiful Soup is a powerful tool for web scraping, and this example covers the basics of using it to parse and manipulate HTML documents.
 
 
-[`next`](webscrape_beautifulsoup1.md)
+[`Next`](webscrape_beautifulsoup1.md)

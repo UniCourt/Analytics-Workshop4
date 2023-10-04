@@ -1,4 +1,4 @@
-## Status code:
+## Status Codes:
 
 When you perform web scraping or make HTTP requests to websites, the server responds with an HTTP status code, which indicates the outcome of the request. These status codes provide information about whether the request was successful, encountered an error, or requires further action. 
 
@@ -38,4 +38,4 @@ These are just a few of the common HTTP status codes you might encounter while s
 
 
 
-[`next`](webscrape_intro_beautifulsoup.md)
+[`Next`](webscrape_intro_beautifulsoup.md)
