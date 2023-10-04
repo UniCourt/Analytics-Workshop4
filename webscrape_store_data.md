@@ -106,9 +106,23 @@ and add the below code
     }
 
 And also add 'scraper.apps.ScraperConfig' to INSTALLED_APPS list in settings.py
+
+code will look like,
+
+    INSTALLED_APPS = [
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        'scraper.apps.ScraperConfig'
+    ]
+
+
 And add the below in the same file 
 
-    ‘ALLOWED_HOSTS = ['*', ]’ 
+    ALLOWED_HOSTS = ['*', ]
 
 
 Step 4. Let us run makemigrations to create the database table using the models. For that first open the tab where webscraper_app is running. If it is not running anywhere, open a new tab and run the below command to run the container

@@ -48,7 +48,7 @@ Step 4 : Create file i,e imdb_extractor.py , which will include the script to sc
 
 step 5 : Copy the below code to the imdb_extractor.py file.
   
-    import requests
+    import requests,re
     from bs4 import BeautifulSoup, element
     
     
@@ -179,7 +179,7 @@ Paste the below code in the file :
         - "8010:8000"
         volumes:
           - .:/workspace/site
-        command: sh -c "python manage.py runserver 0:8010"
+        command: sh -c "python manage.py runserver 0:8000"
         stdin_open: true
         tty: true
         depends_on:
